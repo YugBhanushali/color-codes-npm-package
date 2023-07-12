@@ -1,10 +1,12 @@
 {
   "name": "colour-codes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Convert color codes from Rgba to Hex, Rgba to Hsl, Hex to Rgba, Hex to Hsl, Hsl to Rgba, Hsl to Hex",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -15,12 +17,26 @@
     "codes",
     "rgba",
     "hex",
-    "hsl"
+    "hsl",
+    "convert",
+    "converter",
+    "colour",
+    "colour-codes",
+    "rgba-to-hex",
+    "rgba-to-hsl",
+    "hex-to-rgba",
+    "hex-to-hsl",
+    "hsl-to-rgba",
+    "hsl-to-hex"
   ],
   "author": "Yug Bhanushali",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/YugBhanushali/color-codes-npm-package/issues"
   },
-  "homepage": "https://github.com/YugBhanushali/color-codes-npm-package"
+  "homepage": "https://github.com/YugBhanushali/color-codes-npm-package",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  },
+  "files": ["dist"]
 }

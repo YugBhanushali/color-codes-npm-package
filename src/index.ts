@@ -1,11 +1,10 @@
-const { isValidHexCode, parseRGBA } = require("./validator");
-const { isValidHSLAColor } = require("./validator");
+import { isValidHSLAColor, isValidHexCode, parseRGBA } from "./validator";
 
-const rgbaToHex = (colour) => {
+export const rgbaToHex = (colour: string) => {
   const tempRGBA = parseRGBA(colour);
 
   if (tempRGBA !== null) {
-    if (colour.slice(0, 4).includes("rgba")) {
+    if (colour.slice(0, 4) === "rgba") {
       const rgba = colour.replace("rgba(", "").replace(")", "").split(",");
       const red = parseInt(rgba[0]);
       const green = parseInt(rgba[1]);
@@ -22,7 +21,7 @@ const rgbaToHex = (colour) => {
         alpha >= 0 &&
         alpha <= 1
       ) {
-        let hex = (r, g, b) => {
+        const hex = (r: number, g: number, b: number): string => {
           return (
             "#" +
             [r, g, b]
@@ -57,11 +56,11 @@ const rgbaToHex = (colour) => {
   }
 };
 
-const rgbaToHsla = (colour) => {
+export const rgbaToHsla = (colour: string) => {
   const tempRGBA = parseRGBA(colour);
 
   if (tempRGBA !== null) {
-    if (colour.slice(0, 4).includes("rgba")) {
+    if (colour.slice(0, 4) === "rgba") {
       const rgba = colour.replace("rgba(", "").replace(")", "").split(",");
       const red = parseInt(rgba[0]);
       const green = parseInt(rgba[1]);
@@ -85,8 +84,8 @@ const rgbaToHsla = (colour) => {
         const min = Math.min(r, g, b);
         let l = (max + min) / 2;
         const d = max - min;
-        let h;
-        let s;
+        let h: number = 0;
+        let s: number = 0;
         if (d === 0) {
           h = s = 0; // achromatic
         } else {
@@ -128,8 +127,8 @@ const rgbaToHsla = (colour) => {
   }
 };
 
-const hexToRgba = (hexColor) => {
-  //valid hex number lenght  is 3,4,6,8
+export const hexToRgba = (hexColor: string) => {
+  //valid hex number length is 3, 4, 6, 8
   var hex = hexColor.replace("#", "");
 
   var hexLength = hex.length;
@@ -155,10 +154,10 @@ const hexToRgba = (hexColor) => {
       var alpha = hexLength === 8 ? parseInt(hex.substring(6, 8), 16) / 255 : 1;
 
       if (
-        Number.isNaN(red) ||
-        Number.isNaN(green) ||
-        Number.isNaN(blue) ||
-        Number.isNaN(alpha)
+        isNaN(red) ||
+        isNaN(green) ||
+        isNaN(blue) ||
+        isNaN(alpha)
       ) {
         return {
           type: "invalid",
@@ -188,10 +187,10 @@ const hexToRgba = (hexColor) => {
   // Split the hex code into red, green, blue, and alpha components
 };
 
-const hslaToRgba = (hsla) => {
-  if (hsla.slice(0, 4).includes("hsla")) {
+export const hslaToRgba = (hsla: string) => {
+  if (hsla.slice(0, 4) === "hsla") {
     if (isValidHSLAColor(hsla)) {
-      const values = hsla.match(/\d+(\.\d+)?/g);
+      const values:any = hsla.match(/\d+(\.\d+)?/g);
 
       const hue = parseInt(values[0]);
       const saturation = parseInt(values[1]);
@@ -199,10 +198,10 @@ const hslaToRgba = (hsla) => {
       const alpha = parseFloat(values[3]);
 
       if (
-        Number.isNaN(hue) ||
-        Number.isNaN(saturation) ||
-        Number.isNaN(lightness) ||
-        Number.isNaN(alpha)
+        isNaN(hue) ||
+        isNaN(saturation) ||
+        isNaN(lightness) ||
+        isNaN(alpha)
       ) {
         return {
           type: "invalid",
@@ -214,12 +213,12 @@ const hslaToRgba = (hsla) => {
       const s = saturation / 100;
       const l = lightness / 100;
 
-      let red, green, blue;
+      let red: number, green: number, blue: number;
 
       if (s === 0) {
         red = green = blue = l;
       } else {
-        const hueToRgb = (p, q, t) => {
+        const hueToRgb = (p: number, q: number, t: number): number => {
           if (t < 0) t += 1;
           if (t > 1) t -= 1;
           if (t < 1 / 6) return p + (q - p) * 6 * t;
@@ -270,14 +269,14 @@ const hslaToRgba = (hsla) => {
   }
 };
 
-const hexToHsla = (hexColor) => {
+export const hexToHsla = (hexColor: string) => {
   const test = hexToRgba(hexColor);
   if (test.type === "invalid") {
     return {
       type: "invalid",
     };
   } else {
-    const tempHSLA = rgbaToHsla(
+    const tempHSLA:any = rgbaToHsla(
       `rgba(${test.red},${test.green},${test.blue},${test.alpha})`
     );
     if (tempHSLA.type === "invalid") {
@@ -290,14 +289,14 @@ const hexToHsla = (hexColor) => {
   }
 };
 
-const hslaToHex = (hsla) => {
+export const hslaToHex = (hsla: string) => {
   const test = hslaToRgba(hsla);
   if (test.type === "invalid") {
     return {
       type: "invalid",
     };
   } else {
-    const tempHex = rgbaToHex(`${test?.rgbaString}`);
+    const tempHex:any = rgbaToHex(`${test?.rgbaString}`);
     if (tempHex?.type === "invalid") {
       return {
         type: "invalid",
@@ -308,11 +307,4 @@ const hslaToHex = (hsla) => {
   }
 };
 
-module.exports = {
-  rgbaToHex,
-  rgbaToHsla,
-  hexToHsla,
-  hslaToHex,
-  hexToRgba,
-  hslaToRgba,
-};
+
