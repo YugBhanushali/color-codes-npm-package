@@ -13,26 +13,34 @@ npm install colour-codes
 ## Usage
 
 ```javascript
-const {
-  rgbaToHex,
-  rgbaToHsla,
-  hexToHsla,
-  hslaToHex,
-  hexToRgba,
-  hslaToRgba,
-} = require('colour-codes');
+   import {
+     rgbaToHex,
+     rgbaToHsla,
+     hexToHsla,
+     hslaToHex,
+     hexToRgba,
+     hslaToRgba,
+   } from 'colour-codes';
+ 
+ 
+ 
+   const test1 = rgbaToHex('rgba(255, 255, 255, 1)');
+   console.log(test1); // Output: #ffffff
 
-// Example usage: Convert RGBA to HEX
-const rgbaColor = 'rgba(255, 0, 0, 0.5)';
-const hexColor = rgbaToHex(rgbaColor);
-console.log(hexColor); // Output: #ff000080
+   const test2 = rgbaToHsla('rgba(255, 255, 255, 0.5)');
+   console.log(test2); // Output: { type: 'hsla', hue: 0, saturation: 0, lightness: 1, alpha: 0.5, hslaString: 'hsla(0,0,1,0.5)' }
 
-// Example usage: Convert HEX to HSLA
-const hexColor2 = '#00ff00';
-const hslaColor = hexToHsla(hexColor2);
-console.log(hslaColor); // Output: { hue: 120, saturation: 100, lightness: 50, alpha: 1, hslString: 'hsla(120,100,50,1)' }
+   const test3 = hexToHsla('#f34fffed');
+   console.log(test3); // Output: { type: 'hsla', hue: 296, saturation: 100, lightness: 65, alpha: 0.93, hslaString: 'hsla(296,100,65,0.93)' }
 
-// ... Other conversion functions
+   const test4 = hexToRgba('#f34fffed');
+   console.log(test4); // Output: { type: 'rgba', red: 243, green: 79, blue: 255, alpha: 0.93, rgbaString: 'rgba(243,79,255,0.93)' }
+
+   const test5 = hslaToHex('hsla(300, 53%, 57%, 1)');
+   console.log(test5); // Output: #cb57cb
+
+   const test6 = hslaToRgba('hsla(300, 53%, 57%, 1)').rgbaString;
+   console.log(test6); // Output: rgba(203,87,203,1)
 ```
 
 ## API

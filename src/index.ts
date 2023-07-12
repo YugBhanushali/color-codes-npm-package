@@ -108,11 +108,12 @@ export const rgbaToHsla = (colour: string) => {
           l = Math.round(l * 100);
         }
         return {
+          type: "hsla",
           hue: h,
           saturation: s,
           lightness: l,
           alpha: alpha,
-          hslString: `hsla(${h},${s},${l},${alpha})`,
+          hslaString: `hsla(${h},${s},${l},${alpha})`,
         };
       } else {
         return {
@@ -166,6 +167,7 @@ export const hexToRgba = (hexColor: string) => {
 
       // Return the RGBA values as an object
       return {
+        type: "rgba",
         red: red,
         green: green,
         blue: blue,
@@ -246,6 +248,7 @@ export const hslaToRgba = (hsla: string) => {
         blue <= 255
       ) {
         return {
+          type: "rgba",
           red: red,
           green: green,
           blue: blue,
