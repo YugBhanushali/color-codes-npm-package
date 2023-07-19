@@ -1,4 +1,4 @@
-import { isValidHSLAColor, isValidHexCode, parseRGBA } from "./validator";
+import { isValidHSLAColor, isValidHexCode, parseRGBA, parseRGB ,isValidHSLColor } from "./validator";
 
 export const rgbaToHex = (colour: string) => {
   const tempRGBA = parseRGBA(colour);
@@ -113,7 +113,7 @@ export const rgbaToHsla = (colour: string) => {
           saturation: s,
           lightness: l,
           alpha: alpha,
-          hslaString: `hsla(${h},${s},${l},${alpha})`,
+          hslaString: `hsla(${h}, ${s}%, ${l}%, ${alpha})`,
         };
       } else {
         return {
@@ -191,7 +191,7 @@ export const hexToRgba = (hexColor: string) => {
 
 export const hslaToRgba = (hsla: string) => {
   if (hsla.slice(0, 4) === "hsla") {
-    if (isValidHSLAColor(hsla)) {
+    if (isValidHSLAColor(hsla)?.isValid) {
       const values:any = hsla.match(/\d+(\.\d+)?/g);
 
       const hue = parseInt(values[0]);
@@ -308,6 +308,214 @@ export const hslaToHex = (hsla: string) => {
       return tempHex;
     }
   }
+};
+
+export const rgbaToRgb = (colour: string) => {
+  const tempRGBA = parseRGBA(colour);
+
+  if (tempRGBA !== null) {
+    return{
+      type:"rgb",
+      red:tempRGBA.r,
+      green:tempRGBA.g,
+      blue:tempRGBA.b,
+      rgbString:`rgb(${tempRGBA.r},${tempRGBA.g},${tempRGBA.b})`
+    }
+  }
+
+  return {
+    type:"invalid"
+  };
+};
+
+export const rgbToRgba = (colour: string) => {
+  const tempRGB = parseRGB(colour);
+
+  if (tempRGB !== null) {
+    return{
+      type:"rgba",
+      red:tempRGB.r,
+      green:tempRGB.g,
+      blue:tempRGB.b,
+      alpha:1,
+      rgbaString:`rgba(${tempRGB.r},${tempRGB.g},${tempRGB.b},1)`
+    }
+  }
+
+  return {
+    type:"invalid"
+  };
+}
+
+export const hslaToHsl = (colour: string) => {
+  const tempHSLA = isValidHSLAColor(colour);
+
+  if (tempHSLA?.isValid) {
+    return {
+      type:"hsl",
+      hue:tempHSLA?.hue,
+      saturation:tempHSLA?.saturation,
+      lightness:tempHSLA?.lightness,
+      hslString:`hsl(${tempHSLA?.hue}, ${tempHSLA?.saturation}%, ${tempHSLA?.lightness}%)`
+    }
+  }
+  else {
+    return {
+      type:"invalid"
+    }
+  }
+}
+
+export const hslToHsla = (colour: string) => {
+  const tempHSL = isValidHSLColor(colour);
+
+  if (tempHSL?.isValid) {
+    return {
+      type:"hsla",
+      hue:tempHSL?.hue,
+      saturation:tempHSL?.saturation,
+      lightness:tempHSL?.lightness,
+      alpha:1,
+      hslaString:`hsla(${tempHSL?.hue}, ${tempHSL?.saturation}%, ${tempHSL?.lightness}%, 1)`
+    }
+  }
+  else {
+    return {
+      type:"invalid"
+    }
+  }
+}
+
+export const ColourCode = (colour: string, format: "rgba" | "hex" | "hsla" | "rgb" | "hsl"): string => {
+  let output: any;
+
+  if (isValidHexCode(colour)) {
+    switch (format) {
+      case "rgba":
+        output = hexToRgba(colour)?.rgbaString || "Invalid format";
+        break;
+      case "rgb":
+        const temp = hexToRgba(colour).rgbaString || "Invalid format";
+        output = rgbaToRgb(temp)?.rgbString || "Invalid format";
+        break;
+      case "hsla":
+        output = hexToHsla(colour)?.hslaString || "Invalid format";
+        break;
+      case "hsl":
+        const temp2 = hexToHsla(colour)?.hslaString || "Invalid format";
+        output = hslaToHsl(temp2)?.hslString || "Invalid format";
+        break;
+      case "hex":
+        output = colour; 
+        break;
+      default:
+        output = "Invalid format";
+        break;
+    }
+  } else if (parseRGBA(colour)) {
+    switch (format) {
+      case "hex":
+        output = rgbaToHex(colour) || "Invalid format";
+        break;
+      case "hsla":
+        output = rgbaToHsla(colour)?.hslaString || "Invalid format";
+        break;
+      case "hsl":
+        const temp3 = rgbaToHsla(colour)?.hslaString || "Invalid format";
+        output = hslaToHsl(temp3)?.hslString || "Invalid format";
+        break;
+      case "rgba":
+        output = colour;
+        break;
+      case "rgb":
+        output = rgbaToRgb(colour)?.rgbString || "Invalid format";
+        break;
+      default:
+        output = "Invalid format";
+        break;
+    }
+  } else if (isValidHSLAColor(colour)?.isValid) {
+    switch (format) {
+      case "hex":
+        const rgbaColor = hslaToRgba(colour)?.rgbaString || "Invalid format";
+        output = rgbaToHex(rgbaColor);
+        break;
+      case "rgba":
+        output = hslaToRgba(colour)?.rgbaString || "Invalid format";
+        break;
+      case "rgb":
+        const temp4 = hslaToRgba(colour)?.rgbaString || "Invalid format";
+        output = rgbaToRgb(temp4)?.rgbString || "Invalid format";
+        break;
+      case "hsla":
+        output = colour;
+        break;
+      case "hsl":
+        output = hslaToHsl(colour)?.hslString || "Invalid format";
+        break;
+      default:
+        output = "Invalid format";
+        break;
+    }
+  }
+  else if (isValidHSLColor(colour)?.isValid) {
+    switch (format) {
+      case "hex":
+        const temp = hslToHsla(colour)?.hslaString || "Invalid format";
+        output = hslaToHex(temp) || "Invalid format";
+        break;
+      case "rgba":
+        const temp2 = hslToHsla(colour)?.hslaString || "Invalid format";
+        output = hslaToRgba(temp2)?.rgbaString || "Invalid format";
+        break;
+      case "rgb":
+        const temp3 = hslToHsla(colour)?.hslaString || "Invalid format";
+        const temp4 = hslaToRgba(temp3)?.rgbaString || "Invalid format";
+        output = rgbaToRgb(temp4)?.rgbString || "Invalid format";
+        break;
+      case "hsla":
+        const temp5 = hslToHsla(colour)?.hslaString || "Invalid format";
+        output = temp5;
+        break;
+      case "hsl":
+        output = colour;
+        break;
+      default:
+        output = "Invalid format";
+        break;
+    }
+  }
+  else if (parseRGB(colour)) {
+    switch (format) {
+      case "hex":
+        const temp = rgbToRgba(colour)?.rgbaString || "Invalid format";
+        output = rgbaToHex(temp) || "Invalid format";
+        break;
+      case "hsla":
+        const temp2 = rgbToRgba(colour)?.rgbaString || "Invalid format";
+        output = rgbaToHsla(temp2)?.hslaString || "Invalid format";
+        break;
+      case "hsl":
+        const temp3 = rgbToRgba(colour)?.rgbaString || "Invalid format";
+        const temp4 = rgbaToHsla(temp3)?.hslaString || "Invalid format";
+        output = hslaToHsl(temp4)?.hslString || "Invalid format";
+        break;
+      case "rgba":
+        output = rgbToRgba(colour)?.rgbaString || "Invalid format";
+        break;
+      case "rgb":
+        output = colour;
+        break;
+      default:
+        output = "Invalid format";
+        break;
+    }
+  }
+  else {
+    output = "Invalid color";
+  }
+
+  return output;
 };
 
 
