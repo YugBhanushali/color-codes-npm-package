@@ -172,7 +172,7 @@ export const hexToRgba = (hexColor: string) => {
         green: green,
         blue: blue,
         alpha: parseFloat(alpha.toFixed(2)),
-        rgbaString: `rgba(${red},${green},${blue},${parseFloat(
+        rgbaString: `rgba(${red}, ${green}, ${blue}, ${parseFloat(
           alpha.toFixed(2)
         )})`,
       };
@@ -253,7 +253,7 @@ export const hslaToRgba = (hsla: string) => {
           green: green,
           blue: blue,
           alpha: alpha,
-          rgbaString: `rgba(${red},${green},${blue},${alpha})`,
+          rgbaString: `rgba(${red}, ${green}, ${blue}, ${alpha})`,
         };
       } else {
         return {
@@ -319,7 +319,7 @@ export const rgbaToRgb = (colour: string) => {
       red:tempRGBA.r,
       green:tempRGBA.g,
       blue:tempRGBA.b,
-      rgbString:`rgb(${tempRGBA.r},${tempRGBA.g},${tempRGBA.b})`
+      rgbString:`rgb(${tempRGBA.r}, ${tempRGBA.g}, ${tempRGBA.b})`
     }
   }
 
@@ -338,7 +338,7 @@ export const rgbToRgba = (colour: string) => {
       green:tempRGB.g,
       blue:tempRGB.b,
       alpha:1,
-      rgbaString:`rgba(${tempRGB.r},${tempRGB.g},${tempRGB.b},1)`
+      rgbaString:`rgba(${tempRGB.r}, ${tempRGB.g}, ${tempRGB.b}, 1)`
     }
   }
 

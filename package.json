@@ -1,6 +1,6 @@
 {
   "name": "colour-codes",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Convert color codes from Rgba to Hex, Rgba to Hsl, Hex to Rgba, Hex to Hsl, Hsl to Rgba, Hsl to Hex",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
