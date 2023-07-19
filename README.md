@@ -1,6 +1,6 @@
 # colour-codes
 
-colour-codes is an npm package that provides functions to convert color codes between different formats, including RGBA, HEX, and HSLA. With this package, you can easily perform color code conversions in your JavaScript/Typescript projects.
+colour-codes is an npm package that provides functions to convert color codes between different formats, including RGBA, HEX, HSLA, RGB, and HSL. With this package, you can easily perform color code conversions in your JavaScript/TypeScript projects.
 
 ## Installation
 
